@@ -1,0 +1,3 @@
+# Create a mongoose connection.
+# - When a user is logged in, add that user to a collection.
+# - When a user logs out, delete that user from the collection.
