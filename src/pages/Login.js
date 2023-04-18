@@ -15,6 +15,7 @@ import { UserContext } from "../context/user.context";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from "../components/Loader"
 import Copyright from '../components/Copyright';
+import { ToastContainer, toast } from "react-toastify";
 
 const theme = createTheme();
 
@@ -72,7 +73,7 @@ export default function SignIn() {
     }, []);
 
     // This function gets fired when the user clicks on the "Login" button.
-    const onSubmit = async (event) => {
+    const onSubmit = async () => {
         try {
             // Here we are passing user details to our emailPasswordLogin
             // function that we imported from our realm/authentication.js
@@ -81,9 +82,17 @@ export default function SignIn() {
             if (user) redirectNow();
         } catch (error) {
             if (error.statusCode === 401) {
-                alert("Invalid username/password. Try again!");
+                toast.error("Invalid username/password.", {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    draggable: true,
+                });
             } else {
-                alert(error);
+                toast.error(error.message, {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    draggable: true,
+                });
             }
         }
     };
@@ -161,6 +170,7 @@ export default function SignIn() {
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
+            <ToastContainer/>
         </ThemeProvider>
     );
 }
